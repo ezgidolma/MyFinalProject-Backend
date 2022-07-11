@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IProductDal: IEntityRepository<Product> //Operasyonları  burda yazacağız
+    public interface ICustomerDal:IEntityRepository<Customer>
     {
-      
+
     }
 }

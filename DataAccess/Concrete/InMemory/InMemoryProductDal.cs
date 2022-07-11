@@ -3,6 +3,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -33,11 +34,19 @@ namespace DataAccess.Concrete.InMemory
             _products.Remove(productToDelete);
         }
 
-       
+        public Product Get(Expression<Func<Product, bool>> filtre)
+        {
+            throw new NotImplementedException();
+        }
 
         public List<Product> Getall()
         {
             return _products;//Veri tabanını olduğu gibi döndürür
+        }
+
+        public List<Product> Getall(Expression<Func<Product, bool>> filtre = null)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Product> GetAllByCategory(int categoryId)
