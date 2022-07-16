@@ -34,7 +34,7 @@ namespace DataAccess.Concrete.InMemory
             _products.Remove(productToDelete);
         }
 
-        public Product Get(Expression<Func<Product, bool>> filtre)
+        public Product Get(Expression<Func<Product, bool>> filter)
         {
             throw new NotImplementedException();
         }
@@ -44,7 +44,7 @@ namespace DataAccess.Concrete.InMemory
             return _products;//Veri tabanını olduğu gibi döndürür
         }
 
-        public List<Product> Getall(Expression<Func<Product, bool>> filtre = null)
+        public List<Product> Getall(Expression<Func<Product, bool>> filter = null)
         {
             throw new NotImplementedException();
         }
