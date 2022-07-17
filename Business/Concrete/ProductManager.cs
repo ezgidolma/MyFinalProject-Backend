@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Concrete.InMemory;
 using DataAccess.Abstract;
+using Entities.DTOs;
 
 namespace Business.Concrete
 {
@@ -36,6 +37,11 @@ namespace Business.Concrete
         {
             return _productDal.Getall(p=>p.UnitPrice>=min &&p.UnitPrice<=max);
 
+        }
+
+        public List<ProductDetailDto> GetProductDetails()
+        {
+           return _productDal.GetProductDetails();
         }
     }
 }
