@@ -20,5 +20,7 @@ namespace Business.Abstract
         IDataResult<Product>GeyById(int id);
 
         IResult  Add(Product product);//Bunda data yok
+
+        IResult Update(Product product);
     }
 }
