@@ -34,7 +34,7 @@ namespace Business.Concrete
         public IResult Add(Product product)
         {
           IResult result= BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId)
-              ,CheckIfProductNameExists(product.ProductName));
+              ,CheckIfProductNameExists(product.ProductName),CheckIfCategoryLimitExcede());
 
             if(result != null)
             {
@@ -99,6 +99,16 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.ProductNameAlreadyExists);
             }
 
+            return new SuccessResult();
+        }
+
+        private IResult CheckIfCategoryLimitExcede()
+        {
+            var result = _categoryService.GetAll();
+            if (result.Data.Count>15)
+            {
+                return new ErrorResult(Messages.CategoryLimitExcended);
+            }
             return new SuccessResult();
         }
     }
