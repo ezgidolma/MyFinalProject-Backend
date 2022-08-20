@@ -32,7 +32,7 @@ namespace Business.Concrete
                 Status = true
             };
             _userService.Add(user);
-            return new SuccessDataResult<User>(user, "Kayıt olundu.");
+            return new SuccessDataResult<User>(user, "Kullanıcı eklendi.");
         }
 
         public IDataResult<User> Login(UserForLoginDto userForLoginDto)

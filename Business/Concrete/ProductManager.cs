@@ -16,6 +16,7 @@ using Core.CrossCuttingConcerns.Validation;
 using Core.Aspects.Autofac.Validation;
 using Core.Ultities.Business;
 using Business.BusinessAspects.Autofac;
+using Core.Aspects.Autofac.Caching;
 
 namespace Business.Concrete
 {
@@ -30,7 +31,7 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
-
+        [CacheRemoveAspect("IProductService.Get")]
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
@@ -47,6 +48,7 @@ namespace Business.Concrete
 
         }
 
+        [CacheAspect]
         public IDataResult<List<Product>> GetAll()//İş kodları
         {
             if (DateTime.Now.Hour==23)
@@ -72,14 +74,17 @@ namespace Business.Concrete
            return new SuccessDataResult<List<ProductDetailDto>> (_productDal.GetProductDetails());
         }
 
+        [CacheAspect]
         public IDataResult<Product> GeyById(int id)
         {
             return new SuccessDataResult<Product>( _productDal.Get(p=>p.ProductId==id));
         }
 
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Update(Product product)
         {
-            throw new NotImplementedException();
+            _productDal.Update(product);
+            return new SuccessResult(Messages.ProductUpdated);
         }
 
         private IResult CheckIfProductCountOfCategoryCorrect(int categoryId)//Kategorideki ürün sayısının kurallara uygunluğuunu doğrulama
@@ -112,6 +117,21 @@ namespace Business.Concrete
                 return new ErrorResult(Messages.CategoryLimitExcended);
             }
             return new SuccessResult();
+        }
+
+       // [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+
+
+            Add(product);
+            if (product.UnitPrice<10)
+            {
+                throw new Exception("");
+            }
+            Add(product);
+
+            return null;
         }
     }
 }

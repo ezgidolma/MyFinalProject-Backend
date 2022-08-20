@@ -3,6 +3,8 @@ using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
+using Core.DependencyResolvers;
+using Core.Extenstions;
 using Core.Ultities.IoC;
 using Core.Ultities.Security.Encryption;
 using Core.Ultities.Security.JWT;
@@ -26,8 +28,6 @@ namespace WebApi
 
             var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
-
-            //services.addSingleton<IHttpContextAccessor,HttpContextAccessor>() ;
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -42,9 +42,11 @@ namespace WebApi
                         IssuerSigningKey = SecurityKeyHelper.CreateSecurityKey(tokenOptions.SecurityKey)
                     };
                 });
-           // ServiceTool.Create(services);
-          
 
+            builder.Services.AddDependencyResolvers(new ICoreModule[]{
+                new CoreModule()
+        });
+        
 
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder =>

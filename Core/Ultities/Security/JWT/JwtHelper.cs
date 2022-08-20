@@ -65,5 +65,5 @@ namespace Core.Ultities.Security.JWT
 
             return claims;
         }
-    }   
+    }
 }

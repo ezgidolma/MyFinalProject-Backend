@@ -22,5 +22,7 @@ namespace Business.Abstract
         IResult  Add(Product product);//Bunda data yok
 
         IResult Update(Product product);
+
+        IResult AddTransactionalTest(Product product);//uygulamlarda tutarlılığı yaptığımız yer
     }
 }
