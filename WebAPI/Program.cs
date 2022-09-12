@@ -4,6 +4,7 @@ using Business.Abstract;
 using Business.Concrete;
 using Business.DependencyResolvers.Autofac;
 using Core.DependencyResolvers;
+using Core.Extensions;
 using Core.Extenstions;
 using Core.Ultities.IoC;
 using Core.Ultities.Security.Encryption;
@@ -73,6 +74,8 @@ namespace WebApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.ConfigureCustomExceptionMiddleware();
 
             app.UseAuthentication();
 
